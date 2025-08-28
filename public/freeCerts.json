@@ -1,0 +1,30 @@
+[
+  {
+    "id": "s1",
+    "name": "Google Cloud Digital Leader",
+    "issuer": "Google Cloud Skills Boost",
+    "url": "https://www.cloudskillsboost.google/",
+    "addedDate": "2025-08-01"
+  },
+  {
+    "id": "s2",
+    "name": "Azure Fundamentals (AZ-900)",
+    "issuer": "Microsoft Learn",
+    "url": "https://learn.microsoft.com/en-us/certifications/exams/az-900/",
+    "addedDate": "2025-07-15"
+  },
+  {
+    "id": "s3",
+    "name": "AWS Cloud Practitioner Essentials",
+    "issuer": "AWS Skill Builder",
+    "url": "https://explore.skillbuilder.aws/learn/course/134/aws-cloud-practitioner-essentials",
+    "addedDate": "2025-08-10"
+  },
+  {
+    "id": "s4",
+    "name": "Data Science Foundations",
+    "issuer": "IBM SkillsBuild",
+    "url": "https://skillsbuild.org/",
+    "addedDate": "2025-06-20"
+  }
+]
