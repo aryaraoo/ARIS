@@ -50,7 +50,18 @@ const Settings = () => {
     profileVisibility: true,
     skillsVisibility: true,
     trainingProgressVisibility: false,
-    twoFactorEnabled: false
+    twoFactorAuth: false,
+    twoFactorEnabled: false,
+    sessionTimeout: "8hours",
+    loginNotifications: true,
+    dataExport: true
+  });
+
+  const [integrations, setIntegrations] = useState({
+    slack: false,
+    teams: true,
+    jira: false,
+    lms: false
   });
 
   // Load settings from localStorage on mount
@@ -59,6 +70,7 @@ const Settings = () => {
     const savedProfile = localStorage.getItem('aris-profile');
     const savedSystemSettings = localStorage.getItem('aris-system-settings');
     const savedSecuritySettings = localStorage.getItem('aris-security-settings');
+    const savedIntegrations = localStorage.getItem('aris-integrations');
 
     if (savedNotifications) {
       setNotifications(JSON.parse(savedNotifications));
@@ -71,6 +83,9 @@ const Settings = () => {
     }
     if (savedSecuritySettings) {
       setSecuritySettings(JSON.parse(savedSecuritySettings));
+    }
+    if (savedIntegrations) {
+      setIntegrations(JSON.parse(savedIntegrations));
     }
   }, []);
 
@@ -130,7 +145,11 @@ const Settings = () => {
       profileVisibility: true,
       skillsVisibility: true,
       trainingProgressVisibility: false,
-      twoFactorEnabled: false
+      twoFactorAuth: false,
+      twoFactorEnabled: false,
+      sessionTimeout: "8hours",
+      loginNotifications: true,
+      dataExport: true
     });
 
     // Clear localStorage
@@ -186,6 +205,22 @@ const Settings = () => {
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out.",
+    });
+  };
+
+  const handleIntegrationToggle = (integration: keyof typeof integrations) => {
+    const newIntegrations = {
+      ...integrations,
+      [integration]: !integrations[integration]
+    };
+    setIntegrations(newIntegrations);
+    
+    // Save to localStorage
+    localStorage.setItem('aris-integrations', JSON.stringify(newIntegrations));
+    
+    toast({
+      title: `${integration.toUpperCase()} ${newIntegrations[integration] ? 'Connected' : 'Disconnected'}`,
+      description: `${integration.toUpperCase()} integration has been ${newIntegrations[integration] ? 'enabled' : 'disabled'}.`,
     });
   };
 
@@ -700,8 +735,14 @@ const Settings = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary">Coming Soon</Badge>
-                    <Button variant="outline" size="sm" disabled>Connect</Button>
+                    <Badge variant="outline">Available</Badge>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleIntegrationToggle('jira')}
+                    >
+                      {integrations.jira ? 'Disconnect' : 'Connect'}
+                    </Button>
                   </div>
                 </div>
 
@@ -716,8 +757,14 @@ const Settings = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary">Coming Soon</Badge>
-                    <Button variant="outline" size="sm" disabled>Connect</Button>
+                    <Badge variant="outline">Available</Badge>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleIntegrationToggle('lms')}
+                    >
+                      {integrations.lms ? 'Disconnect' : 'Connect'}
+                    </Button>
                   </div>
                 </div>
               </div>
